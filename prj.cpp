@@ -3,8 +3,8 @@
 #include <ctime>
 using namespace std;
 
-
-void criador_chave(int chave[],int numero_cores,int tamanho_chave, char repetir_cores){
+// FUNCAO DE CRIACAO DA CHAVE SENHA//
+void criador_chave(char chave[],int numero_cores,int tamanho_chave, char repetir_cores){
   int cor,repeticao[numero_cores]={0},voltar_rand=0,j=0;
   srand ( time(NULL) );
   for(int i=0;i<tamanho_chave;i++)
@@ -12,8 +12,10 @@ void criador_chave(int chave[],int numero_cores,int tamanho_chave, char repetir_
     voltar_rand=0;
     do{
 
+      cor=rand()%numero_cores+1;   //ESCOLHA DA COR
 
-      cor=rand()%numero_cores+1;
+
+      // CONTROLE DA REPETICAO
       for(j=0; j<numero_cores  && (repetir_cores=='N'|| repetir_cores=='n');j++){
         if (repeticao[j]==cor){
           voltar_rand=1;
@@ -49,7 +51,7 @@ void criador_chave(int chave[],int numero_cores,int tamanho_chave, char repetir_
 
 }
 
-
+// FIM DA CRIACAO DA CHAVE SENHA
 
 
 
@@ -57,7 +59,7 @@ int main(){
 // INICIALIZACAO
 srand ( time(NULL) );
 
-  int numero_jogadores=0,tamanho_chave=1,numero_cores=0;
+  int numero_jogadores=0,tamanho_chave=1,numero_cores=0,numero_jogadas;
 
 while(numero_jogadores<1 || numero_jogadores>4){
   fflush(stdin);
@@ -73,30 +75,63 @@ while(tamanho_chave<4 || tamanho_chave>8){
   puts("\nTamanho da chave de 4 a 8:");
   scanf(" %d",&tamanho_chave);
 }
+while(numero_jogadas<10||numero_jogadas>20){
+  fflush(stdin);
+  puts("\nNumero de jogadas 10 a 20:");
+  scanf(" %d",&numero_jogadas);
+}
 
 
 
-  int chave[tamanho_chave];
-  char Nome_jogadores[numero_jogadores][20];
+  int j,w,y,q,pretas,brancas;
+  char chave[tamanho_chave],nome_jogadores[numero_jogadores][20],escolha[tamanho_chave];
   char repetir_cores='e';
 
 
   while(repetir_cores!='S' && repetir_cores!='N' && repetir_cores!='s' && repetir_cores!='n'){
-    puts("Sera permitido repetir cores: S/N");
+    puts("Sera permitido repetir cores S/N:");
     scanf(" %c",&repetir_cores);
   }
   for(int i=0;i<numero_jogadores;i++)
   {
     fflush(stdin);
-    puts("\nNome dos jogadores");
-    scanf(" %s", Nome_jogadores[i]);
+    puts("\nNome dos jogadores max.20:");
+    scanf(" %s", nome_jogadores[i]);
 }
 
-criador_chave(chave, numero_cores,tamanho_chave,repetir_cores);
-for(int i=0;i<tamanho_chave;i++){
-  printf("%c\n",chave[i]);
-}
+
+
 //FIM DA INICIALIZACAO
+
+/// COMECO DO JOGO
+for(int i=0;i<numero_jogadores;i++){ //TROCA DE JOGADOR
+  printf("\nVez do Jogador %s\n",nome_jogadores[i]);
+  criador_chave(chave, numero_cores,tamanho_chave,repetir_cores);
+  for(q=0;q<tamanho_chave;q++){
+    printf("%c\n",chave[q]);
+  }
+  for(j=0;j<numero_jogadas && brancas!=tamanho_chave;j++){//CONTAGEM DE JOGADAS
+    printf("\nFaltam %d\n",(numero_jogadas-j));
+    for(w=0,brancas=0;w<tamanho_chave;w++){
+      puts("Escolha a cor:");
+      scanf(" %c",&escolha[w]);
+      if(escolha[w]==chave[w]){
+        brancas++;
+      }
+    }
+    for(w=0,pretas=0;w<tamanho_chave;w++){
+      for(y=0;y<tamanho_chave;y++){
+        if(escolha[y]==chave[w]){
+          pretas++;
+        }
+      }
+    }pretas=pretas-brancas;
+    printf("B%dP%d",brancas,pretas);
+
+  }
+
+}
+
 
 
 
