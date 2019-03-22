@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctime>
+#include <time.h>
 using namespace std;
 
 // FUNCAO DE CRIACAO DA CHAVE SENHA//
@@ -59,7 +60,7 @@ int main(){
 // INICIALIZACAO
 srand ( time(NULL) );
 
-  int numero_jogadores=0,tamanho_chave=1,numero_cores=0,numero_jogadas;
+  int numero_jogadores=0,tamanho_chave=1,numero_cores=0,numero_jogadas,h;
 
 while(numero_jogadores<1 || numero_jogadores>4){
   fflush(stdin);
@@ -83,16 +84,20 @@ while(numero_jogadas<10||numero_jogadas>20){
 
 
 
-  int j,w,y,q,pretas,brancas;
+  int j,w,y,q,pretas=0,brancas=021;
   char chave[tamanho_chave],nome_jogadores[numero_jogadores][20],escolha[tamanho_chave];
   char repetir_cores='e';
+  int i,maior;
+  int lista_t[4],numero_pretas[4], listas_jogadas[4];
+  clock_t end_t=0,start_t=0,timer_t=0;
 
 
-  while(repetir_cores!='S' && repetir_cores!='N' && repetir_cores!='s' && repetir_cores!='n'){
+
+    while(repetir_cores!='S' && repetir_cores!='N' && repetir_cores!='s' && repetir_cores!='n'){
     puts("Sera permitido repetir cores S/N:");
     scanf(" %c",&repetir_cores);
   }
-  for(int i=0;i<numero_jogadores;i++)
+  for(i=0;i<numero_jogadores;i++)
   {
     fflush(stdin);
     puts("\nNome dos jogadores max.20:");
@@ -105,32 +110,81 @@ while(numero_jogadas<10||numero_jogadas>20){
 
 /// COMECO DO JOGO
 for(int i=0;i<numero_jogadores;i++){ //TROCA DE JOGADOR
-  printf("\nVez do Jogador %s\n",nome_jogadores[i]);
+
+
+
+printf("Vez do Jogador : %s\n",nome_jogadores[i]);
   criador_chave(chave, numero_cores,tamanho_chave,repetir_cores);
   for(q=0;q<tamanho_chave;q++){
     printf("%c\n",chave[q]);
   }
-  for(j=0;j<numero_jogadas && brancas!=tamanho_chave;j++){//CONTAGEM DE JOGADAS
-    printf("\nFaltam %d\n",(numero_jogadas-j));
-    for(w=0,brancas=0;w<tamanho_chave;w++){
+  start_t = (clock()-end_t);
+  timer_t=0;
+  for(j=0,brancas=0,pretas=0;j<numero_jogadas && pretas!=tamanho_chave && timer_t<60000 ;j++){//CONTAGEM DE JOGADAS
+    for(w=0,brancas=0,pretas=0;w<tamanho_chave && timer_t<60000;w++){
+      timer_t=(clock()-start_t-end_t);
       puts("Escolha a cor:");
       scanf(" %c",&escolha[w]);
       if(escolha[w]==chave[w]){
-        brancas++;
+
+      pretas++;}
+
+      }
+
+
+    for(h=0;h<tamanho_chave;h++){
+      for(y=0;y<tamanho_chave;y++){
+        if(escolha[y]==chave[h]){
+          brancas++;
+          break;
+        }
+
+
       }
     }
-    for(w=0,pretas=0;w<tamanho_chave;w++){
-      for(y=0;y<tamanho_chave;y++){
-        if(escolha[y]==chave[w]){
-          pretas++;
-        }
-      }
-    }pretas=pretas-brancas;
-    printf("B%dP%d",brancas,pretas);
+    brancas=brancas-pretas;
+
+    printf("P%dB%d\n",pretas,brancas);
+    if (numero_pretas[j]<pretas){
+      numero_pretas[j]=pretas;
+    }
+
+  if(timer_t>60000){
+    printf("Tempo de jogada acabou\n");
+  }
+  listas_jogadas[i]=j;
 
   }
-
+  end_t = clock();
+  lista_t[i]={timer_t};
 }
+
+
+
+// ESTATICAS
+
+for(i=0,maior=0;i<numero_jogadores;i++){
+  if(lista_t[i]<=lista_t[maior]){
+    if(numero_pretas[i]>=numero_pretas[maior]){
+    maior=i;
+}}}
+printf("Nome do vencedor do torneio:Chave acertada em menos tempo %s\n",nome_jogadores[maior]);
+for(i=0,maior=0;i<numero_jogadores;i++){
+  if(numero_pretas[i]>=numero_pretas[maior]){
+    if(lista_t[i]<=lista_t[maior]){
+    maior=i;
+}}}
+printf("Nome do vencedor do torneio: Jogador com mais chaves certas em menos tempo médio de jogo.  %s\n",nome_jogadores[maior]);
+
+
+for(i=0,maior=0;i<numero_jogadores;i++){
+  if(numero_pretas[i]>=numero_pretas[maior]){
+    if(listas_jogadas[i]<=listas_jogadas[maior]){
+    maior=i;
+    }}}
+
+
+printf("Nome do vencedor para o jogo mais curto: Chave acertada em menos jogadas %s\n",nome_jogadores[maior]);
 
 
 
