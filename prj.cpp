@@ -89,9 +89,9 @@ while(tempo_max<60||tempo_max>300){
 
   int j,w,y,q,pretas=0,brancas=021;
   char chave[tamanho_chave],nome_jogadores[numero_jogadores][20],escolha[tamanho_chave];
-  char repetir_cores='e';
-  int i,maior;
-  int lista_t[4],numero_pretas[4], listas_jogadas[4];
+  char repetir_cores='e',vencedor_1,vencedor_2,vencedor_3;
+  int i,maior_pretas,menor_t;
+  int lista_t[4][1],numero_pretas[4][1], listas_jogadas[4],quantidade_jogos[numero_jogadores][1];
   clock_t end_t=0,start_t=0,timer_t=0;
 
 
@@ -106,23 +106,37 @@ while(tempo_max<60||tempo_max>300){
     puts("\nNome dos jogadores max.20:");
     scanf(" %s", nome_jogadores[i]);
 }
+for(i=0;i<numero_jogadores;i++)
+{
+  fflush(stdin);
+  printf("\n\nQuantos jogos o jogador %s vai fazer, MAX:5\n",nome_jogadores[i]);
+  puts("\n");
+  scanf(" %d", quantidade_jogos[i]);
+}
 
 
 
 //FIM DA INICIALIZACAO
 
 /// COMECO DO JOGO
+system("cls");
+
 for(int i=0;i<numero_jogadores;i++){ //TROCA DE JOGADOR
+  system("cls");
 
 
 
-printf("\n\nVez do Jogador : %s\n",nome_jogadores[i]);
+
+for(int d=0;d<*quantidade_jogos[i];d++){
+  printf("\n\nVez do Jogador : %s\nJogada:%d de %d\n",nome_jogadores[i],d,*quantidade_jogos[i]);
+
   criador_chave(chave, numero_cores,tamanho_chave,repetir_cores);
   for(q=0;q<tamanho_chave;q++){
     printf("%c\n",chave[q]);
   }time(&start_t);
   start_t = (start_t-end_t);
   timer_t=0;
+
   for(j=0,brancas=0,pretas=0;j<numero_jogadas && pretas!=tamanho_chave && timer_t<=tempo_max ;j++){//CONTAGEM DE JOGADAS
 
     for(w=0,brancas=0,pretas=0;w<tamanho_chave && timer_t<=tempo_max;w++){
@@ -152,8 +166,8 @@ printf("\n\nVez do Jogador : %s\n",nome_jogadores[i]);
     brancas=brancas-pretas;
 
     printf("P%dB%d\n",pretas,brancas);
-    if (numero_pretas[j]<pretas){
-      numero_pretas[j]=pretas;
+
+
     }
 
   if(timer_t>tempo_max){
@@ -164,37 +178,24 @@ printf("\n\nVez do Jogador : %s\n",nome_jogadores[i]);
 
   }
   time(&end_t);
-  lista_t[i]={timer_t};
+  if((*lista_t[i]>timer_t)&&(*numero_pretas[i]<pretas)){
+    *lista_t[i]={timer_t};
+    *numero_pretas[i]=pretas;
+  }
+
 }
 
 
 
 // ESTATICAS
 
-for(i=0,maior=0;i<numero_jogadores;i++){
-  if(lista_t[i]<=lista_t[maior]){
-    if(numero_pretas[i]>=numero_pretas[maior]){
-    maior=i;
-}}}
-printf("Nome do vencedor do torneio:Chave acertada em menos tempo\t %s\n",nome_jogadores[maior]);
-for(i=0,maior=0;i<numero_jogadores;i++){
-  if(numero_pretas[i]>=numero_pretas[maior]){
-    if(lista_t[i]<=lista_t[maior]){
-    maior=i;
-}}}
-printf("Nome do vencedor do torneio: Jogador com mais chaves certas em menos tempo medio de jogo.\t  %s\n",nome_jogadores[maior]);
+for(i=0,maior_pretas=0,menor_t=0;i<numero_jogadores;i++){
+  if(*numero_pretas[i]>maior_pretas){
+    if(*lista_t[i]<menor_t){
+      vencedor_2=i;
+    }
+  }
 
-
-for(i=0,maior=0;i<numero_jogadores;i++){
-  if(numero_pretas[i]>=numero_pretas[maior]){
-    if(listas_jogadas[i]<=listas_jogadas[maior]){
-    maior=i;
-    }}}
-
-
-printf("Nome do vencedor para o jogo mais curto: Chave acertada em menos jogadas\t %s\n",nome_jogadores[maior]);
-
-
-
-
-  return 0;}
+}
+printf("Nome do vencedor para jogo mais rapido %s\n",nome_jogadores[vencedor_2]);
+return 0;}
