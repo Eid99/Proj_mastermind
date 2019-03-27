@@ -3,7 +3,7 @@
 #include <time.h>
 
 
-// FUNCAO DE CRIACAO DA CHAVE SENHA//
+// FUNCAO DE CRIACAO DA CHAVE SENHA
 void criador_chave(char chave[],int numero_cores,int tamanho_chave, char repetir_cores){
   int cor,repeticao[numero_cores],voltar_rand=0,j=0;
   srand ( time(NULL) );
@@ -56,30 +56,43 @@ void criador_chave(char chave[],int numero_cores,int tamanho_chave, char repetir
 
 
 int main(){
+
 // INICIALIZACAO
 srand ( time(NULL) );
 
   int numero_jogadores=0,tamanho_chave=1,numero_cores=0,numero_jogadas,h,tempo_max;
 
+
+//QUATIDADE DE JOGADORES
 while(numero_jogadores<1 || numero_jogadores>4){
   fflush(stdin);
   puts("Quantos Jogadores de 1 a 4:");
   scanf("%d",&numero_jogadores);}
+
+
+  //NUMERO DE CORES
 while(numero_cores<6 || numero_cores>12){
   fflush(stdin);
   puts("\nNumero de cores de 6 a 12:");
   scanf(" %d",&numero_cores);
 }
+
+//TAMANHO DA CHAVE SECRETA
 while(tamanho_chave<4 || tamanho_chave>8){
   fflush(stdin);
   puts("\nTamanho da chave de 4 a 8:");
   scanf(" %d",&tamanho_chave);
 }
+
+
+//NUMERO DE JOGADAS EM CADA JOGO
 while(numero_jogadas<10||numero_jogadas>20){
   fflush(stdin);
   puts("\nNumero de jogadas 10 a 20:");
   scanf(" %d",&numero_jogadas);
 }
+
+//TEMPO MAXIMO DE CADA JOGO
 while(tempo_max<60||tempo_max>300){
   fflush(stdin);
   puts("\nTempo de maximo por jogada: 60 a 300 segundos");
@@ -96,17 +109,22 @@ while(tempo_max<60||tempo_max>300){
   int numero_pretas3[numero_jogadores][1], menor_jogadas,tempo_medio[numero_jogadores][1],numero_pretas1[numero_jogadores][1],vencedor_1,vencedor_2,vencedor_3;
 
 
-
+// REPETICAO DE CORES
     while(repetir_cores!='S' && repetir_cores!='N' && repetir_cores!='s' && repetir_cores!='n'){
     puts("\nSera permitido repetir cores S/N:");
     scanf(" %c",&repetir_cores);
   }
+
+  //NOME DOS JOGADORES
   for(i=0;i<numero_jogadores;i++)
   {
     fflush(stdin);
     puts("\nNome dos jogadores max.20:");
     scanf(" %s", nome_jogadores[i]);
 }
+
+
+//QUANTOS JOGOS CADA JOGADOR IRA FAZER
 for(i=0;i<numero_jogadores;i++)
 {
   fflush(stdin);
@@ -119,6 +137,8 @@ for(i=0;i<numero_jogadores;i++)
 
 //FIM DA INICIALIZACAO
 
+
+
 /// COMECO DO JOGO
 system("cls");
 
@@ -126,14 +146,16 @@ for(int i=0;i<numero_jogadores;i++){ //TROCA DE JOGADOR
   system("cls");
 
 
-
+//VARIAVEIS DAS ESTATISTICAS
 *numero_pretas2[i]={0};
 *lista_t2[i]={400};
 *lista_t3[i]={0};
 *numero_pretas3[i]={0};
 *listas_jogadas3[i]={30};
 *numero_pretas1[i]={0};
-for(int d=0;d<*quantidade_jogos[i];d++){
+
+
+for(int d=0;d<*quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
   system("cls");
   printf("\n\nVez do Jogador : %s\nJogada:%d de %d\n",nome_jogadores[i],d,*quantidade_jogos[i+1]);
 
@@ -155,14 +177,14 @@ for(int d=0;d<*quantidade_jogos[i];d++){
 
       puts("Escolha a cor:");
       scanf(" %c",&escolha[w]);
-      if(escolha[w]==chave[w]){
+      if(escolha[w]==chave[w]){//CONTAGEM POSICOES CERTAS
 
       pretas++;}
 
       }
 
 
-    for(h=0;h<tamanho_chave;h++){
+    for(h=0;h<tamanho_chave;h++){// CONTAGEM DE CORES CERTAS
       for(y=0;y<tamanho_chave;y++){
         if(escolha[y]==chave[h]){
           brancas++;
@@ -233,6 +255,10 @@ for(i=0,maior_pretas=0,menor_t=400;i<numero_jogadores;i++){
 
   printf("\nNome do vencedor do torneio: %s\n",nome_jogadores[vencedor_1]);
 
+
+
+
+
 // ESTATISTICAS 2
 
 for(i=0,maior_pretas=0,menor_t=400, menor_jogadas=499;i<numero_jogadores;i++){
@@ -253,13 +279,10 @@ for(i=0,maior_pretas=0,menor_t=400, menor_jogadas=499;i<numero_jogadores;i++){
         menor_jogadas=*listas_jogadas2[i];
 
       }
-    }
-
-
-}
-
-
+    }}
 printf("\nNome do vencedor para jogo mais rapido %s\n",nome_jogadores[vencedor_2]);
+
+
 
 
 
