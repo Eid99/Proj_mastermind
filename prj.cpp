@@ -157,7 +157,7 @@ for(int i=0;i<numero_jogadores;i++){ //TROCA DE JOGADOR
 
 for(int d=0;d<*quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
   system("cls");
-  printf("\n\nVez do Jogador : %s\nJogada:%d de %d\n",nome_jogadores[i],d,*quantidade_jogos[i+1]);
+  printf("\n\nVez do Jogador : %s\nJogada:%d de %d\n",nome_jogadores[i],d+1,*quantidade_jogos[i]);
 
   criador_chave(chave, numero_cores,tamanho_chave,repetir_cores);
   for(q=0;q<tamanho_chave;q++){
@@ -252,6 +252,7 @@ for(i=0,maior_pretas=0,menor_t=400;i<numero_jogadores;i++){
       vencedor_1=i;
       menor_t=*tempo_medio[i];
       maior_pretas=*numero_pretas1[i];}}}
+      system("cls");
 
   printf("\nNome do vencedor do torneio: %s\n",nome_jogadores[vencedor_1]);
 
@@ -280,6 +281,7 @@ for(i=0,maior_pretas=0,menor_t=400, menor_jogadas=499;i<numero_jogadores;i++){
 
       }
     }}
+    system("cls");
 printf("\nNome do vencedor para jogo mais rapido %s\n",nome_jogadores[vencedor_2]);
 
 
