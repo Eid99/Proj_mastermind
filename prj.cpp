@@ -5,9 +5,9 @@
 
 // FUNCAO DE CRIACAO DA CHAVE SENHA
 void criador_chave(char chave[],int numero_cores,int tamanho_chave, char repetir_cores){
-  int cor,repeticao[numero_cores],voltar_rand=0,j=0;
+  int cor,repeticao[numero_cores],voltar_rand=0,j=0,i;
   srand ( time(NULL) );
-  for(int i=0;i<tamanho_chave;i++)
+  for(i=0;i<tamanho_chave;i++)
   {
     voltar_rand=0;
     do{
@@ -60,7 +60,7 @@ int main(){
 // INICIALIZACAO
 srand ( time(NULL) );
 
-  int numero_jogadores=0,tamanho_chave=1,numero_cores=0,numero_jogadas,h,tempo_max;
+  int numero_jogadores=0,tamanho_chave=1,numero_cores=0,numero_tentativas,h,tempo_max;
 
 
 //QUATIDADE DE JOGADORES
@@ -86,10 +86,10 @@ while(tamanho_chave<4 || tamanho_chave>8){
 
 
 //NUMERO DE JOGADAS EM CADA JOGO
-while(numero_jogadas<10||numero_jogadas>20){
+while(numero_tentativas<10||numero_tentativas>20){
   fflush(stdin);
-  puts("\nNumero de jogadas 10 a 20:");
-  scanf(" %d",&numero_jogadas);
+  puts("\nNumero de tentativas 10 a 20:");
+  scanf(" %d",&numero_tentativas);
 }
 
 //TEMPO MAXIMO DE CADA JOGO
@@ -100,13 +100,13 @@ while(tempo_max<60||tempo_max>300){
 }
 
 
-  int j,w,y,q,pretas=0,brancas=021;
+  int j,w,y,q,pretas=0,brancas=021,d,i;
   char chave[tamanho_chave],nome_jogadores[numero_jogadores][20],escolha[tamanho_chave];
   char repetir_cores='e';
-  int i,maior_pretas,menor_t,listas_jogadas2[numero_jogadores][1],lista_t3[numero_jogadores][1],listas_jogadas3[numero_jogadores][1];
-  int lista_t2[numero_jogadores][1],numero_pretas2[numero_jogadores][1],listas_jogadas[numero_jogadores][1],quantidade_jogos[numero_jogadores][1];
+  int maior_pretas,menor_t,listas_jogadas2[numero_jogadores],lista_t3[numero_jogadores],listas_jogadas3[numero_jogadores];
+  int lista_t2[numero_jogadores],numero_pretas2[numero_jogadores],listas_jogadas[numero_jogadores],quantidade_jogos[numero_jogadores];
   clock_t end_t=0,start_t=0,timer_t=0;
-  int numero_pretas3[numero_jogadores][1], menor_jogadas,tempo_medio[numero_jogadores][1],numero_pretas1[numero_jogadores][1],vencedor_1,vencedor_2,vencedor_3;
+  int numero_pretas3[numero_jogadores], menor_jogadas,tempo_medio[numero_jogadores],numero_pretas1[numero_jogadores],vencedor_1,vencedor_2,vencedor_3;
 
 
 // REPETICAO DE CORES
@@ -130,7 +130,7 @@ for(i=0;i<numero_jogadores;i++)
   fflush(stdin);
   printf("\n\nQuantos jogos o jogador %s vai fazer, MAX:5",nome_jogadores[i]);
   puts("\n");
-  scanf(" %d", quantidade_jogos[i]);
+  scanf(" %d", &quantidade_jogos[i]);
 }
 
 
@@ -142,22 +142,22 @@ for(i=0;i<numero_jogadores;i++)
 /// COMECO DO JOGO
 system("cls");
 
-for(int i=0;i<numero_jogadores;i++){ //TROCA DE JOGADOR
+for(i=0;i<numero_jogadores;i++){ //TROCA DE JOGADOR
   system("cls");
 
 
 //VARIAVEIS DAS ESTATISTICAS
-*numero_pretas2[i]={0};
-*lista_t2[i]={400};
-*lista_t3[i]={0};
-*numero_pretas3[i]={0};
-*listas_jogadas3[i]={30};
-*numero_pretas1[i]={0};
+numero_pretas2[i]={0};
+lista_t2[i]={400};
+lista_t3[i]={0};
+numero_pretas3[i]={0};
+listas_jogadas3[i]={30};
+numero_pretas1[i]={0};
 
 
-for(int d=0;d<*quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
+for(d=0;d<quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
   system("cls");
-  printf("\n\nVez do Jogador : %s\nJogada:%d de %d\n",nome_jogadores[i],d+1,*quantidade_jogos[i]);
+  printf("\n\nVez do Jogador : %s\nJogada:%d de %d\n",nome_jogadores[i],d+1,quantidade_jogos[i]);
 
   criador_chave(chave, numero_cores,tamanho_chave,repetir_cores);
   for(q=0;q<tamanho_chave;q++){
@@ -168,13 +168,13 @@ for(int d=0;d<*quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
   start_t = (start_t-end_t);
   timer_t=0;
 
-  for(j=0,brancas=0,pretas=0;j<numero_jogadas && pretas!=tamanho_chave && timer_t<=tempo_max ;j++){//CONTAGEM DE JOGADAS
+  for(j=0,brancas=0,pretas=0;j<numero_tentativas && pretas!=tamanho_chave && timer_t<=tempo_max ;j++){//CONTAGEM DE JOGADAS
+    printf("Tentativa:%d de %d", j+1,numero_tentativas);
 
     for(w=0,brancas=0,pretas=0;w<tamanho_chave && timer_t<=tempo_max;w++){
       time(&timer_t);
       timer_t=(timer_t-start_t-end_t);
-
-
+      fflush(stdin);
       puts("Escolha a cor:");
       scanf(" %c",&escolha[w]);
       if(escolha[w]==chave[w]){//CONTAGEM POSICOES CERTAS
@@ -213,26 +213,26 @@ for(int d=0;d<*quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
 
   // CALCULO DA ESTATISTICAS 2
 
-  if((*lista_t2[i]>timer_t)&&(*numero_pretas2[i]<=pretas)){
+  if((lista_t2[i]>timer_t)&&(numero_pretas2[i]<=pretas)){
 
-    *lista_t2[i]={timer_t};
-    *numero_pretas2[i]=pretas;
-    *listas_jogadas2[i]=j;
+    lista_t2[i]={timer_t};
+    numero_pretas2[i]=pretas;
+    listas_jogadas2[i]=j;
   }
 
 
     // CALCULO DA ESTATISTICAS 3
-    if((*lista_t3[i]<timer_t)&&(*listas_jogadas3[i]>j)){
-      *lista_t2[i]=timer_t;
-      *numero_pretas3[i]=pretas;
-      *listas_jogadas3[i]=j;}
+    if((lista_t3[i]<timer_t)&&(listas_jogadas3[i]>j)){
+      lista_t2[i]=timer_t;
+      numero_pretas3[i]=pretas;
+      listas_jogadas3[i]=j;}
 
 
       // CALCULO DA ESTATISTICAS 1
 
-      *tempo_medio[i]+=timer_t;
-      if(*numero_pretas1[i]<=pretas){
-        *numero_pretas1[i]=pretas;
+      tempo_medio[i]+=timer_t;
+      if(numero_pretas1[i]<=pretas){
+        numero_pretas1[i]=pretas;
 
       }
 
@@ -241,17 +241,17 @@ for(int d=0;d<*quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
 }
 
 for(i=0;i<numero_jogadores;i++){
-  *tempo_medio[i]/=*quantidade_jogos[i];
+  tempo_medio[i]/=quantidade_jogos[i];
 }
 
 
 //ESTATICAS 1
 for(i=0,maior_pretas=0,menor_t=400;i<numero_jogadores;i++){
-  if(*numero_pretas1[i]>maior_pretas){
-    if(*tempo_medio[i]<menor_t){
+  if(numero_pretas1[i]>maior_pretas){
+    if(tempo_medio[i]<menor_t){
       vencedor_1=i;
-      menor_t=*tempo_medio[i];
-      maior_pretas=*numero_pretas1[i];}}}
+      menor_t=tempo_medio[i];
+      maior_pretas=numero_pretas1[i];}}}
       system("cls");
 
   printf("\nNome do vencedor do torneio: %s\n",nome_jogadores[vencedor_1]);
@@ -263,25 +263,24 @@ for(i=0,maior_pretas=0,menor_t=400;i<numero_jogadores;i++){
 // ESTATISTICAS 2
 
 for(i=0,maior_pretas=0,menor_t=400, menor_jogadas=499;i<numero_jogadores;i++){
-  if(*numero_pretas2[i]>maior_pretas){
-    if(*lista_t2[i]<menor_t){
+  if(numero_pretas2[i]>maior_pretas){
+    if(lista_t2[i]<menor_t){
       vencedor_2=i;
-      menor_t=*lista_t2[i];
-      maior_pretas=*numero_pretas2[i];
-      menor_jogadas=*listas_jogadas[i];
+      menor_t=lista_t2[i];
+      maior_pretas=numero_pretas2[i];
+      menor_jogadas=listas_jogadas[i];
 
 
 
     }
-    else if(*lista_t2[i]==menor_t && *listas_jogadas[i]<menor_jogadas){
+    else if(lista_t2[i]==menor_t && listas_jogadas[i]<menor_jogadas){
         vencedor_2=i;
-        menor_t=*lista_t2[i];
-        maior_pretas=*numero_pretas2[i];
-        menor_jogadas=*listas_jogadas2[i];
+        menor_t=lista_t2[i];
+        maior_pretas=numero_pretas2[i];
+        menor_jogadas=listas_jogadas2[i];
 
       }
     }}
-    system("cls");
 printf("\nNome do vencedor para jogo mais rapido %s\n",nome_jogadores[vencedor_2]);
 
 
@@ -290,21 +289,21 @@ printf("\nNome do vencedor para jogo mais rapido %s\n",nome_jogadores[vencedor_2
 
 // ESTATISTICAS 3
 for(i=0,maior_pretas=0,menor_t=400, menor_jogadas=499;i<numero_jogadores;i++){
-if(*numero_pretas3[i]>maior_pretas){
-  if(*listas_jogadas[i]<menor_jogadas){
+if(numero_pretas3[i]>maior_pretas){
+  if(listas_jogadas[i]<menor_jogadas){
     vencedor_3=i;
-    menor_t=*lista_t3[i];
-    maior_pretas=*numero_pretas3[i];
-    menor_jogadas=*listas_jogadas3[i];
+    menor_t=lista_t3[i];
+    maior_pretas=numero_pretas3[i];
+    menor_jogadas=listas_jogadas3[i];
 
 
 
   }
-  else if(*lista_t3[i]==menor_t && *lista_t2[i]<menor_t){
+  else if(lista_t3[i]==menor_t && lista_t2[i]<menor_t){
       vencedor_3=i;
-      menor_t=*lista_t3[i];
-      maior_pretas=*numero_pretas3[i];
-      menor_jogadas=*listas_jogadas3[i];
+      menor_t=lista_t3[i];
+      maior_pretas=numero_pretas3[i];
+      menor_jogadas=listas_jogadas3[i];
     }}}
 
 
