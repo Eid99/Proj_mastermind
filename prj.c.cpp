@@ -147,12 +147,12 @@ for(i=0;i<numero_jogadores;i++){ //TROCA DE JOGADOR
 
 
 //VARIAVEIS DAS ESTATISTICAS
-numero_pretas2[i]={0};
-lista_t2[i]={400};
-lista_t3[i]={0};
-numero_pretas3[i]={0};
-listas_jogadas3[i]={30};
-numero_pretas1[i]={0};
+numero_pretas2[i]=0;
+lista_t2[i]=400;
+lista_t3[i]=0;
+numero_pretas3[i]=0;
+listas_jogadas3[i]=30;
+numero_pretas1[i]=0;
 
 
 for(d=0;d<quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
@@ -215,7 +215,7 @@ for(d=0;d<quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
 
   if((lista_t2[i]>timer_t)&&(numero_pretas2[i]<=pretas)){
 
-    lista_t2[i]={timer_t};
+    lista_t2[i]=timer_t;
     numero_pretas2[i]=pretas;
     listas_jogadas2[i]=j;
   }
