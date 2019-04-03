@@ -27,7 +27,7 @@ void INICIALIZACAO(int *numero_jogadores, int *tamanho_chave, int *numero_cores,
   }
 
 
-  //NUMERO DE JOGADAS EM CADA JOGO
+  //NUMERO DE tentativas EM CADA JOGO
   while(*numero_tentativas<10||*numero_tentativas>20){
     fflush(stdin);
     puts("\nNumero de tentativas 10 a 20:");
@@ -107,9 +107,11 @@ void JOGADORES(int numero_jogador,char nome_jogadores[][20],int quantidade_jogos
     puts("\nNome dos jogadores max.20:");
     scanf(" %s", nome_jogadores[i]);
 
-    printf("\n\nQuantos jogos o jogador %s vai fazer, MAX:5",nome_jogadores[i]);
-    puts("\n");
-    scanf(" %d", &quantidade_jogos[i]);
+    while(quantidade_jogos[i]<0||quantidade_jogos[i]>5){//NUMERO DE JOGOS
+      printf("\n\nQuantos jogos o jogador %s vai fazer, MAX:5",nome_jogadores[i]);
+      puts("\n");
+      scanf(" %d", &quantidade_jogos[i]);
+    }
 }
 }
 
@@ -121,30 +123,18 @@ srand ( time(NULL) );
   int numero_jogadores,tamanho_chave=1,numero_cores=0,numero_tentativas=0,tempo_max=0,h;
   char repetir_cores;
 
-
-
 INICIALIZACAO(&numero_jogadores,&tamanho_chave,&numero_cores,&numero_tentativas,&tempo_max,&repetir_cores);
 
 
 int j,w,y,q,pretas=0,brancas=0,d,i;
 char chave[tamanho_chave],nome_jogadores[numero_jogadores][20],escolha[tamanho_chave];
 int maior_pretas,menor_t,listas_jogadas2[numero_jogadores],lista_t3[numero_jogadores],listas_jogadas3[numero_jogadores];
-int lista_t2[numero_jogadores],numero_pretas2[numero_jogadores],listas_jogadas[numero_jogadores],quantidade_jogos[numero_jogadores];
+int lista_t2[numero_jogadores],numero_pretas2[numero_jogadores],listas_jogadas[numero_jogadores],quantidade_jogos[numero_jogadores]={6};
 clock_t end_t=0,start_t=0,timer_t=0;
 int numero_pretas3[numero_jogadores], menor_jogadas,tempo_medio[numero_jogadores],numero_pretas1[numero_jogadores],vencedor_1,vencedor_2,vencedor_3;
 
 
-
-
-
-
-
-
-  JOGADORES(numero_jogadores,nome_jogadores,quantidade_jogos);
-
-
-
-
+JOGADORES(numero_jogadores,nome_jogadores,quantidade_jogos);
 
 //FIM DA INICIALIZACAO
 
