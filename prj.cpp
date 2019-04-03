@@ -129,7 +129,7 @@ INICIALIZACAO(&numero_jogadores,&tamanho_chave,&numero_cores,&numero_tentativas,
 int j,w,y,q,pretas=0,brancas=0,d,i;
 char chave[tamanho_chave],nome_jogadores[numero_jogadores][20],escolha[tamanho_chave];
 int maior_pretas,menor_t,listas_jogadas2[numero_jogadores],lista_t3[numero_jogadores],listas_jogadas3[numero_jogadores];
-int lista_t2[numero_jogadores],numero_pretas2[numero_jogadores],listas_jogadas[numero_jogadores],quantidade_jogos[numero_jogadores];
+int lista_t2[numero_jogadores],numero_pretas2[numero_jogadores],quantidade_jogos[numero_jogadores];
 clock_t end_t=0,start_t=0,timer_t=0;
 int numero_pretas3[numero_jogadores], menor_jogadas,tempo_medio[numero_jogadores],numero_pretas1[numero_jogadores],vencedor_1,vencedor_2,vencedor_3;
 
@@ -266,12 +266,12 @@ for(i=0,maior_pretas=0,menor_t=400, menor_jogadas=499;i<numero_jogadores;i++){
       vencedor_2=i;
       menor_t=lista_t2[i];
       maior_pretas=numero_pretas2[i];
-      menor_jogadas=listas_jogadas[i];
+      menor_jogadas=listas_jogadas2[i];
 
 
 
     }
-    else if(lista_t2[i]==menor_t && listas_jogadas[i]<menor_jogadas){
+    else if(lista_t2[i]==menor_t && listas_jogadas2[i]<menor_jogadas){
         vencedor_2=i;
         menor_t=lista_t2[i];
         maior_pretas=numero_pretas2[i];
@@ -288,7 +288,7 @@ printf("\nNome do vencedor para jogo mais rapido %s\n",nome_jogadores[vencedor_2
 // ESTATISTICAS 3
 for(i=0,maior_pretas=0,menor_t=400, menor_jogadas=499;i<numero_jogadores;i++){
 if(numero_pretas3[i]>maior_pretas){
-  if(listas_jogadas[i]<menor_jogadas){
+  if(listas_jogadas3[i]<menor_jogadas){
     vencedor_3=i;
     menor_t=lista_t3[i];
     maior_pretas=numero_pretas3[i];
