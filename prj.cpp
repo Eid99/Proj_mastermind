@@ -102,7 +102,7 @@ while(tempo_max<60||tempo_max>300){
 
   int j,w,y,q,pretas=0,brancas=021,d,i;
   char chave[tamanho_chave],nome_jogadores[numero_jogadores][20],escolha[tamanho_chave];
-  char repetir_cores='e';
+  char repetir_cores;
   int maior_pretas,menor_t,listas_jogadas2[numero_jogadores],lista_t3[numero_jogadores],listas_jogadas3[numero_jogadores];
   int lista_t2[numero_jogadores],numero_pretas2[numero_jogadores],listas_jogadas[numero_jogadores],quantidade_jogos[numero_jogadores];
   clock_t end_t=0,start_t=0,timer_t=0;
@@ -207,7 +207,13 @@ for(d=0;d<quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
 }
 
 
+// CALCULO DA ESTATISTICAS 1
 
+tempo_medio[i]+=timer_t;
+if(numero_pretas1[i]<=pretas){
+  numero_pretas1[i]=pretas;
+
+}
 
 
 
@@ -228,17 +234,12 @@ for(d=0;d<quantidade_jogos[i];d++){// INICIALIZACAO DE DIFERENTES JOGOS
       listas_jogadas3[i]=j;}
 
 
-      // CALCULO DA ESTATISTICAS 1
 
-      tempo_medio[i]+=timer_t;
-      if(numero_pretas1[i]<=pretas){
-        numero_pretas1[i]=pretas;
-
-      }
 
 
 
 }
+// CONTINUACAO DO CALCULO DA ESTATISTICAS 1
 
 for(i=0;i<numero_jogadores;i++){
   tempo_medio[i]/=quantidade_jogos[i];
