@@ -108,12 +108,15 @@ void JOGADORES(int numero_jogador,char nome_jogadores[][20],int quantidade_jogos
     scanf(" %s", nome_jogadores[i]);
     quantidade_jogos[i] = 6;
     while(quantidade_jogos[i]<0||quantidade_jogos[i]>5){//NUMERO DE JOGOS
+      fflush(stdin);
       printf("\n\nQuantos jogos o jogador %s vai fazer, MAX:5",nome_jogadores[i]);
       puts("\n");
       scanf(" %d", &quantidade_jogos[i]);
+
     }
 }
 }
+
 
 int main(){
 
